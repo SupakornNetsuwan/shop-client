@@ -1,3 +1,4 @@
+"use client";
 import Wrapper from "@/core/layouts/Wrapper";
 import Check from "./(resources)/components/Check";
 
