@@ -1,42 +1,53 @@
 "use client";
 import React from "react";
-import Spline from "@splinetool/react-spline";
 import { Application } from "@splinetool/runtime";
 import useIsHeroLoaded from "@/core/hooks/useIsHeroLoaded";
-import LoadingAnimation from "@/core/components/LoadingAnimation";
-import { twMerge } from "tailwind-merge";
+import WebsiteHeader from "./WebsiteHeader";
+import CategoryBox from "./CategoryBox";
+import SaleCountBox from "./SaleCountBox";
+import ChargeFeeBox from "./ChargeFeeBox";
+import ThumbSlider from "./ThumbSlider";
+import SwipeAnimation from "../animation/SwipeAnimation";
+import dynamic from "next/dynamic";
+import { Loader } from "lucide-react";
+const Spline = dynamic(() => import("@splinetool/react-spline"), {
+  ssr: false,
+  loading: () => <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><Loader className="animate-spin"/></div>,
+});
 
 const Hero = () => {
-  const [isHeroLoaded, setIsHeroLoaded] = useIsHeroLoaded();
+  const [_, setIsHeroLoaded] = useIsHeroLoaded();
+
   const onLoad = (e: Application) => {
-    setIsHeroLoaded(true);
+    setTimeout(() => {
+      setIsHeroLoaded(true);
+    }, 5000);
   };
 
   return (
     <>
-      <div className="h-12 w-full bg-gradient-to-t from-[#ffd1d2] to-[#ffd1d2]/80" />
-
-      <div className="relative flex h-[80dvh] w-full items-center justify-end bg-[#ffd1d2] p-4">
-        <div className="relatibe z-10 flex w-2/5 flex-col rounded bg-white/50 p-8 backdrop-blur-sm">
-          <div className="">
-            <p className="pb-4 font-mitr text-4xl font-semibold">
-              Adorable shop
-            </p>
-            <p className="text-xl">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci
-              dolor vero iste odit quisquam. Minima aperiam expedita corrupti
-              quas est?
-            </p>
+      <div className="relative flex h-[90dvh] w-full items-center justify-end bg-brand-primary p-4 xl:p-24">
+        <div className="border-t-1 relative z-10 rounded-xl border border-b-0 border-l-2 border-r-0 border-white/50 bg-gradient-to-r from-white/30 to-transparent p-2 backdrop-blur 2xl:w-2/5">
+          {/* <div className="absolute -left-12 -top-12 h-24 w-12 bg-red-500" /> */}
+          <WebsiteHeader className="mb-2" />
+          <div className="relative flex gap-2 overflow-hidden pr-4">
+            <CategoryBox className="flex-1" />
+            <div className="box-border flex flex-1 flex-col gap-2">
+              <SaleCountBox className="flex-1" />
+              <ChargeFeeBox className="flex-1" />
+            </div>
+            <ThumbSlider />
+            <SwipeAnimation />
           </div>
-          <p>x</p>
         </div>
+
         <Spline
           className="absolute inset-0 block opacity-50 sm:opacity-100"
-          scene="https://prod.spline.design/O-SdUOIul5oR0Bc6/scene.splinecode"
+          scene="https://draft.spline.design/u3UJCNecVm0PXv6P/scene.splinecode"
           onLoad={onLoad}
         />
       </div>
-      <div className="h-12 w-full bg-gradient-to-b from-[#ffd1d2] to-white" />
+      <div className="h-12 w-full bg-gradient-to-b from-brand-primary to-white" />
     </>
   );
 };

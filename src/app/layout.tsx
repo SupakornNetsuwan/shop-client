@@ -5,13 +5,18 @@ import Providers from "@/core/providers/Providers";
 import JotaiProvider from "@/core/providers/JotaiProvider";
 import NextAuthProvider from "@/core/providers/NextAuthProvider";
 import ReactQueryProvider from "@/core/providers/ReactQueryProvider";
+import Navbar from "@/core/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Adorable shop",
   description: "Your next cute accessories gadget 💐",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
@@ -22,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <JotaiProvider key="JotaiProvider" />,
           ]}
         >
+          <Navbar />
           {children}
           <Toaster />
         </Providers>
