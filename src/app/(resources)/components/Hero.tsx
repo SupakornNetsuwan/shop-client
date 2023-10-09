@@ -12,16 +12,18 @@ import dynamic from "next/dynamic";
 import { Loader } from "lucide-react";
 const Spline = dynamic(() => import("@splinetool/react-spline"), {
   ssr: false,
-  loading: () => <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><Loader className="animate-spin"/></div>,
+  loading: () => (
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Loader className="animate-spin" />
+    </div>
+  ),
 });
 
 const Hero = () => {
   const [_, setIsHeroLoaded] = useIsHeroLoaded();
 
   const onLoad = (e: Application) => {
-    setTimeout(() => {
-      setIsHeroLoaded(true);
-    }, 5000);
+    setIsHeroLoaded(true);
   };
 
   return (

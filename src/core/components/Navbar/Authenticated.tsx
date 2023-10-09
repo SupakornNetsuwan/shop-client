@@ -58,7 +58,7 @@ const Authenticated: React.FC<{ session: Session }> = ({ session }) => {
             <Link href="/profile">
               <Button variant="ghost" className="gap-2">
                 <User size={18} />
-                <span>Profile</span>
+                <span>Account</span>
               </Button>
             </Link>
           </NavigationMenuItem>

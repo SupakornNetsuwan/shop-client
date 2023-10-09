@@ -28,17 +28,14 @@ const ProductMenu = () => {
           className="object-cover opacity-50 transition-transform hover:scale-105 group-hover:blur-[5px] "
         />
       </li>
-      <ListItem href="/docs" title="Digital art">
-        Re-usable components built using Radix UI and Tailwind CSS.
+      <ListItem href="/docs" title="Art">
+        Commercial art for your business or private usage
       </ListItem>
       <ListItem href="/docs" title="Poster">
-        Re-usable components built using Radix UI and Tailwind CSS.
+        Choose your favorite poster collections
       </ListItem>
-      <ListItem href="/docs/installation" title="Installation">
-        How to install dependencies and structure your app.
-      </ListItem>
-      <ListItem href="/docs/primitives/typography" title="Typography">
-        Styles for headings, paragraphs, lists...etc
+      <ListItem href="/docs" title="Goods & Accessories">
+        Find some cool stuffs for brighten your day
       </ListItem>
     </ul>
   );
