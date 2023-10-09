@@ -13,6 +13,8 @@ const authOption = {
             },
             async authorize(credentials, req) {
                 const { email, password } = credentials || { email: "", password: "" }
+                
+                // ...
 
                 // Signin mock
                 if (email && password) {

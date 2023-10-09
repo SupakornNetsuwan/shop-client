@@ -15,7 +15,7 @@ module.exports = {
     extend: {
       boxShadow: {
         "realistic-1": "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
-        "realistic-2": "rgba(0,0,0,0.08) 0px 4px 12px"
+        "realistic-2": "rgba(0, 0, 0, 0.4) 0px 30px 90px;"
       },
       colors: {
         brand: {
