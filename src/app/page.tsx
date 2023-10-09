@@ -1,13 +1,12 @@
 "use client";
-import Wrapper from "@/core/layouts/Wrapper";
-import Check from "./(resources)/components/Check";
+import { Button } from "@/core/components/ui/button";
+import Hero from "./(resources)/components/Hero";
 
 const Home = () => {
   return (
     <div>
-      <h2 className="text-slate-800 font-bold text-lg">Hello my applciation</h2>
-      <p className="text-slate-500">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio, ipsam.</p>
-      <Check />
+      <Hero />
+      <div className="w-full h-screen"></div>
     </div>
   );
 };
