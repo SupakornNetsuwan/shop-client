@@ -15,9 +15,7 @@ const HeaderTypedText = () => {
           1000,
           "find your love happiness here!",
           1000,
-          () => {
-            console.log("cb");
-          },
+          () => {},
         ]}
         wrapper="span"
         speed={50}

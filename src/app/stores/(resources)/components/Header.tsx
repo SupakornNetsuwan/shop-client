@@ -1,17 +1,48 @@
-import React from "react";
+"use client";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import storesBackdropGradient from "@/../../public/stores-backdrop-gradient.png";
-import tree1 from "@/../../public/tree-1.png";
-import tree2 from "@/../../public/tree-2.png";
-import tree3 from "@/../../public/tree-3.png";
-import tree4 from "@/../../public/tree-4.png";
-import tree5 from "@/../../public/tree-5.png";
-import tree6 from "@/../../public/tree-6.png";
+import tree1 from "@/../../public/stores/tree-1.png";
+import tree2 from "@/../../public/stores/tree-2.png";
+import tree3 from "@/../../public/stores/tree-3.png";
+import tree4 from "@/../../public/stores/tree-4.png";
+import tree5 from "@/../../public/stores/tree-5.png";
+import tree6 from "@/../../public/stores/tree-6.png";
 import HeaderTypedText from "./HeaderTypedText";
+import { animate, glide, stagger, timeline } from "motion";
+import { Tilt } from "react-tilt";
 
+const tiltOption = {
+  transition: true,
+  reverse: false,
+  scale: 1,
+  speed: 1000,
+  perspective: 700,
+};
 const Header = () => {
+  const imageRefs = useRef<React.ElementRef<typeof Image>[]>([]);
+
+  useLayoutEffect(() => {
+    if (!imageRefs.current.length) return;
+
+    animate(
+      imageRefs.current as HTMLElement[],
+      {
+        transform: ["translateX(15%) scaleX(0)", "none"],
+        filter: ["blur(10px)", "none"],
+      },
+      {
+        delay: stagger(0.2),
+        easing: glide({
+          velocity: 5,
+          power: 10,
+        }),
+      },
+    );
+  }, [imageRefs]);
+
   return (
-    <div className="relative w-full p-16 pt-32 md:p-32 md:pt-44 z-10">
+    <div className="relative z-10 w-full p-16 pt-32 md:p-32 md:pt-44">
       <div className="relative z-20">
         <h1 className="text-slate-800s relative inline-block text-2xl font-bold before:absolute before:-bottom-2 before:block before:h-3 before:w-full before:bg-brand-primary/50 sm:text-4xl lg:text-7xl">
           Community stores
@@ -20,34 +51,40 @@ const Header = () => {
           <HeaderTypedText />
         </div>
       </div>
-      <div className="pointer-events-none absolute bottom-0 right-0">
+      <div className="absolute bottom-0 right-0">
         <Image
+          ref={(el) => (imageRefs.current[0] = el)}
           src={tree1}
           alt="tree-1"
           className="relative z-20 w-44 rounded shadow-realistic-2"
         />
         <Image
           src={tree2}
+          ref={(el) => (imageRefs.current[1] = el)}
           alt="tree-2"
           className="relative bottom-4 right-36 z-10 w-52 rounded opacity-70 blur-[5px]"
         />
         <Image
           src={tree3}
+          ref={(el) => (imageRefs.current[2] = el)}
           alt="tree-3"
           className="absolute -left-[15em] bottom-4 top-12 z-20 w-64 rounded"
         />
         <Image
           src={tree4}
+          ref={(el) => (imageRefs.current[3] = el)}
           alt="tree-4"
           className="absolute -bottom-12 -left-[18em] z-20 w-40 rounded "
         />
         <Image
           src={tree5}
+          ref={(el) => (imageRefs.current[4] = el)}
           alt="tree-5"
           className="absolute -left-[14em] top-0 z-10 w-32 rounded opacity-40 blur-[4px]"
         />
         <Image
           src={tree6}
+          ref={(el) => (imageRefs.current[5] = el)}
           alt="tree-6"
           className="absolute -left-[24em] bottom-0 z-10 w-32 rounded blur-[2px]"
         />
