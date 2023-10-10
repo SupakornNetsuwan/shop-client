@@ -1,7 +1,8 @@
 import { NextPage } from "next";
 import React from "react";
 import Header from "./(resources)/components/Header";
-import Store from "./(resources)/components/Store";
+import StoreCard from "./(resources)/components/StoreCard";
+import StoreWrapper from "./(resources)/layout/StoreWrapper";
 
 const stores = [
   { name: "Chubby sotre" },
@@ -11,13 +12,13 @@ const stores = [
 
 const Stores: NextPage = () => {
   return (
-    <div>
+    <div className="">
       <Header />
-      <Store.Wrapper className="pt-20">
+      <StoreWrapper className="pt-20 store-wrapper">
         {[...new Array(20)].map((_, i) => (
-          <Store.Card key={i} />
+          <StoreCard key={i} />
         ))}
-      </Store.Wrapper>
+      </StoreWrapper>
     </div>
   );
 };

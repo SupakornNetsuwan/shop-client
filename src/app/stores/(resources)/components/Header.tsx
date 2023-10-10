@@ -10,15 +10,7 @@ import tree5 from "@/../../public/stores/tree-5.png";
 import tree6 from "@/../../public/stores/tree-6.png";
 import HeaderTypedText from "./HeaderTypedText";
 import { animate, glide, stagger, timeline } from "motion";
-import { Tilt } from "react-tilt";
 
-const tiltOption = {
-  transition: true,
-  reverse: false,
-  scale: 1,
-  speed: 1000,
-  perspective: 700,
-};
 const Header = () => {
   const imageRefs = useRef<React.ElementRef<typeof Image>[]>([]);
 

@@ -14,10 +14,10 @@ const ProductMenu = () => {
           href="/stores"
           className="relative z-10 flex flex-col items-start"
         >
-          <p className="bg-reen-500 inline-flex animate-pulse rounded bg-green-500 px-2 py-1 text-white">
+          <p className="bg-reen-500 inline-flex animate-pulse rounded bg-green-500 px-2 py-1 text-white pointer-events-none">
             New
           </p>
-          <h3 className="mt-2 inline-flex bg-slate-50/50 px-2 text-4xl font-semibold text-slate-800">
+          <h3 className="mt-2 inline-flex bg-slate-50/50 px-2 text-4xl font-semibold text-slate-800 pointer-events-none">
             Community stores
           </h3>
         </NavigationMenuLink>
@@ -26,7 +26,7 @@ const ProductMenu = () => {
           src={stickerThumbnail}
           fill
           alt="sticker-thumbnail"
-          className="object-cover opacity-50 transition-transform hover:scale-105 group-hover:blur-[5px] "
+          className="object-cover opacity-50 transition-all group-hover:blur-[5px] "
         />
       </li>
       <ListItem href="/docs" title="Art">
