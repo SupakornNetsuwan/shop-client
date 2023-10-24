@@ -8,7 +8,7 @@ const ContentWrapper = React.forwardRef<
   } & React.ComponentPropsWithRef<"div">
 >(({ children, className, ...props }, ref) => {
   return (
-    <div {...props} ref={ref} className={cn("p-12 md:p-20", className)}>
+    <div {...props} ref={ref} className={cn("p-12 md:p-20 max-w-[1800px] mx-auto", className)}>
       {children}
     </div>
   );

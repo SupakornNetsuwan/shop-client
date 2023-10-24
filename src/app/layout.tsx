@@ -6,6 +6,7 @@ import JotaiProvider from "@/core/providers/JotaiProvider";
 import NextAuthProvider from "@/core/providers/NextAuthProvider";
 import ReactQueryProvider from "@/core/providers/ReactQueryProvider";
 import Navbar from "@/core/components/Navbar";
+import TooltipProvider from "@/core/providers/TooltipProvider";
 
 export const metadata: Metadata = {
   title: "Adorable shop",
@@ -25,6 +26,7 @@ export default function RootLayout({
             <NextAuthProvider key="NextAuthProvider" />,
             <ReactQueryProvider key="ReactQueryProvider" />,
             <JotaiProvider key="JotaiProvider" />,
+            <TooltipProvider key="TooltipProvider" />,
           ]}
         >
           <Navbar />

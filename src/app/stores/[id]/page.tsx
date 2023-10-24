@@ -1,11 +1,10 @@
 "sever only";
 import { NextPage } from "next";
 import React from "react";
-import ContentWrapper from "./layout/PageWrapper";
+import ContentWrapper from "../../../core/layouts/ContentWrapper";
 import tree1 from "../../../../public/stores/tree-1.png";
-import Thumbnail from "./layout/Thumbnail";
-import Product from "./layout/Product";
-import ProductWrapper from "./layout/ProductWrapper";
+import Thumbnail from "./_resources/components/Thumbnail";
+import Store from "./_resources/components/Store";
 
 type PageProps = {
   params: {
@@ -26,12 +25,7 @@ const page: NextPage<PageProps> = async ({ params: { id } }) => {
           nisi consequatur, commodi laboriosam placeat itaque reiciendis
           doloremque deserunt blanditiis?
         </h2>
-        <ProductWrapper className="mt-8 grid grid-cols-6 [&>div]:bg-red-500 gap-4">
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-        </ProductWrapper>
+        <Store />
       </ContentWrapper>
     </div>
   );

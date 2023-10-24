@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/core/components/ui/card";
-import LoginForm from "./(resources)/components/LoginForm";
+import LoginForm from "./_resources/components/LoginForm";
 import Link from "next/link";
 import { animate } from "motion";
 
