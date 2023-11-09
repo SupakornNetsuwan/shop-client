@@ -10,6 +10,7 @@ import ThumbSlider from "./ThumbSlider";
 import SwipeAnimation from "../animation/SwipeAnimation";
 import dynamic from "next/dynamic";
 import { Loader } from "lucide-react";
+
 const Spline = dynamic(() => import("@splinetool/react-spline"), {
   ssr: false,
   loading: () => (

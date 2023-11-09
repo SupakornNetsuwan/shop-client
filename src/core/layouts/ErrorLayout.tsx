@@ -1,14 +1,12 @@
-import React, {useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 const ErrorLayout: React.FC<{
   children?: React.ReactNode;
   error: Error | string | Object | null;
 }> = ({ children, error }) => {
-
   useEffect(() => {
     console.error(error);
   }, [error]);
-
 
   const message = useMemo(() => {
     if (error instanceof Error) return error.message;

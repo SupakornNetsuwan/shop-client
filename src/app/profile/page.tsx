@@ -1,7 +1,7 @@
 "server only";
 import React from "react";
 import { NextPage } from "next";
-import { UserCircle2, Settings } from "lucide-react";
+import { UserCircle2 } from "lucide-react";
 import { Separator } from "@/core/components/ui/separator";
 import {
   Table,
@@ -10,10 +10,8 @@ import {
   TableRow,
 } from "@/core/components/ui/table";
 import ProfileDetail from "./_resources/components/ProfileDetail";
-import { Button } from "@/core/components/ui/button";
-import MoneyButton from "./_resources/components/MoneyButton";
-import ProfileFormProvider from "./_resources/providers/ProfileFormProvider";
-import ProfileForm from "./_resources/components/ProfileForm";
+import ProfileConfigureAction from "./_resources/components/ProfileConfigureAction";
+import CashConfigureAction from "./_resources/components/CashConfigureAction";
 
 const page: NextPage = () => {
   return (
@@ -29,10 +27,8 @@ const page: NextPage = () => {
           </h2>
         </div>
         <div className="flex gap-2">
-          <MoneyButton>120</MoneyButton>
-          <Button variant="outline" size="icon" className="text-slate-800">
-            <Settings size={24} />
-          </Button>
+          <CashConfigureAction />
+          <ProfileConfigureAction />
         </div>
       </div>
       <Separator orientation="horizontal" className="my-6" />
@@ -76,11 +72,6 @@ const page: NextPage = () => {
           </Table>
         </ProfileDetail>
       </div>
-      {/* <div className="mt-12">
-        <ProfileFormProvider>
-          <ProfileForm />
-        </ProfileFormProvider>
-      </div> */}
     </>
   );
 };

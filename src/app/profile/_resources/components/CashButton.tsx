@@ -9,10 +9,10 @@ import { Button } from "@/core/components/ui/button";
 import { CircleDollarSign } from "lucide-react";
 import { cn } from "@/core/libs/utils";
 
-const MoneyButton = React.forwardRef<
+const CashButton = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentPropsWithRef<typeof Button>
->(({ className, children, ...props }, ref) => {
+>(({ className, children,  ...props }, ref) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -36,6 +36,6 @@ const MoneyButton = React.forwardRef<
   );
 });
 
-MoneyButton.displayName = "MoneyButton";
+CashButton.displayName = "MoneyButton";
 
-export default MoneyButton;
+export default CashButton;
