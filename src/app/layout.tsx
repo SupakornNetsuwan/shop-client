@@ -27,6 +27,7 @@ export default function RootLayout({
             <ReactQueryProvider key="ReactQueryProvider" />,
             <JotaiProvider key="JotaiProvider" />,
             <TooltipProvider key="TooltipProvider" />,
+            <ReactQueryProvider key="QueryProvider" />,
           ]}
         >
           <Navbar />

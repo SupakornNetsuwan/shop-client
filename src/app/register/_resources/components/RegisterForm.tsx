@@ -14,7 +14,7 @@ import {
 } from "@/core/components/ui/form";
 import { z } from "zod";
 import { Button } from "@/core/components/ui/button";
-import { signIn } from "next-auth/react";
+import useRegister from "@/core/hooks/useRegister";
 
 const registerFormSchema = z
   .object({
@@ -34,9 +34,10 @@ const registerFormSchema = z
     path: ["confirmPassword"], // Specify that this error is about the confirmPassword field
   });
 
-type RegisterFormSchemaType = z.infer<typeof registerFormSchema>;
+export type RegisterFormSchemaType = z.infer<typeof registerFormSchema>;
 
 const RegisterForm = () => {
+  const register = useRegister();
   const methods = useForm<RegisterFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -49,7 +50,14 @@ const RegisterForm = () => {
   });
 
   const onSubmit: SubmitHandler<RegisterFormSchemaType> = (data) => {
-    console.log(data)
+    register.mutate(data, {
+      onSuccess(data, variables, context) {
+        console.log(data);
+      },
+      onError(error, variables, context) {
+        console.log(error);
+      },
+    });
   };
 
   return (
