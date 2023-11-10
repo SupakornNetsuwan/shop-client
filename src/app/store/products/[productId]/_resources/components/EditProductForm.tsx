@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import type { CreateProductSchemaType } from "../providers/CreateProductProvider";
+import type { CreateProductSchemaType as EditProductSchemaType } from "@/app/store/_resources/providers/CreateProductProvider";
 import { Input } from "@/core/components/ui/input";
 import { Textarea } from "@/core/components/ui/textarea";
 import { Button } from "@/core/components/ui/button";
@@ -19,9 +19,9 @@ import {
   SelectValue,
 } from "@/core/components/ui/select";
 
-const CreateProductForm = () => {
-  const { control } = useFormContext<CreateProductSchemaType>();
-  const categories: CreateProductSchemaType["category"][] = [
+const EditProductForm = () => {
+  const { control } = useFormContext<EditProductSchemaType>();
+  const categories: EditProductSchemaType["category"][] = [
     "goods",
     "sticker",
     "digital-art",
@@ -133,11 +133,11 @@ const CreateProductForm = () => {
       </div>
       <div>
         <Button className="mt-4" type="submit">
-          Add
+          Edit
         </Button>
       </div>
     </div>
   );
 };
 
-export default CreateProductForm;
+export default EditProductForm;

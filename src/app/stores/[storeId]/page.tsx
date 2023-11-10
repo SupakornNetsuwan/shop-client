@@ -8,11 +8,11 @@ import Store from "./_resources/components/Store";
 
 type PageProps = {
   params: {
-    id: string;
+    storeId: string;
   };
 };
 
-const page: NextPage<PageProps> = async ({ params: { id } }) => {
+const page: NextPage<PageProps> = async ({ params: { storeId } }) => {
   return (
     <div>
       <Thumbnail src={tree1} alt="tree1" fill={true} />

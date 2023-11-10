@@ -1,16 +1,7 @@
 "use client";
 import { Button } from "../ui/button";
 import { LogOut, User, BookUser, Store, ShoppingCart } from "lucide-react";
-import Link from "next/link";
 import { Session } from "next-auth";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/core/components/ui/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuContent,

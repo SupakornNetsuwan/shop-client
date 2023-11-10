@@ -1,32 +1,41 @@
-import React from "react";
-import { Separator } from "@/core/components/ui/separator";
-import { Store } from "lucide-react";
-import CreateProductAction from "./_resources/components/CreateProductAction";
+import { NextPage } from "next";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
-const page = () => {
+const links = [
+  {
+    href: "/store/products",
+    name: "Products",
+    description: "View your all currently selling products",
+  },
+  {
+    href: "/store/orders",
+    name: "Orders",
+    description: "View your all requested orders and their status",
+  },
+];
+
+const page: NextPage = (props) => {
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Store
-            className="box-content rounded-lg bg-slate-100 p-1"
-            size={28}
-          />
-          <h2 className="text-2xl font-medium text-slate-800">Manage Store</h2>
-        </div>
-        <div className="flex gap-2">
-          <CreateProductAction />
-        </div>
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {links.map((link) => (
+          <Link
+            key={link.name}
+            href={link.href}
+            className="flex items-center justify-between space-x-6 rounded-md bg-white p-8 hover:bg-slate-50 border transition-colors"
+          >
+            <div className="">
+              <p className="text-lg font-medium text-slate-800">{link.name}</p>
+              <p className="text-sm text-slate-500 [text-wrap:balance]">
+                {link.description}
+              </p>
+            </div>
+            <ChevronRight size={24} className="text-blue-500" />
+          </Link>
+        ))}
       </div>
-      <Separator orientation="horizontal" className="my-6" />
-      <div className="flex flex-col space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-          {[...new Array(10).keys()].map((i) => (
-            <div key={i}>{i}</div>
-          ))}
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 
