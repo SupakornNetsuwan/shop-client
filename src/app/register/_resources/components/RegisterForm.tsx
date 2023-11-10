@@ -15,6 +15,9 @@ import {
 import { z } from "zod";
 import { Button } from "@/core/components/ui/button";
 import useRegister from "@/core/hooks/useRegister";
+import { SignInResponse, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/core/components/ui/use-toast";
 
 const registerFormSchema = z
   .object({
@@ -37,6 +40,8 @@ const registerFormSchema = z
 export type RegisterFormSchemaType = z.infer<typeof registerFormSchema>;
 
 const RegisterForm = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   const register = useRegister();
   const methods = useForm<RegisterFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
@@ -51,11 +56,42 @@ const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<RegisterFormSchemaType> = (data) => {
     register.mutate(data, {
-      onSuccess(data, variables, context) {
-        console.log(data);
+      async onSuccess(successData, variables, context) {
+        try {
+          const result: SignInResponse | undefined = await signIn(
+            "credentials",
+            {
+              email: data.email,
+              password: data.password,
+              redirect: false,
+            },
+          );
+
+          if (!result) throw new Error("No response from server");
+          if (result.error) throw new Error(result.error);
+
+          router.replace("/stores");
+          toast({
+            title: `Register success 👋`,
+            description: "Have a good trip!",
+          });
+        } catch (error) {
+          let message = "Unknown error";
+          if (error instanceof Error) message = error.message;
+
+          toast({
+            title: `Login fail`,
+            description: message,
+            variant: "destructive",
+          });
+        }
       },
       onError(error, variables, context) {
-        console.log(error);
+        toast({
+          title: `Login fail`,
+          description: error.response?.data.message,
+          variant: "destructive",
+        });
       },
     });
   };

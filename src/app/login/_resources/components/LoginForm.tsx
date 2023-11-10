@@ -6,7 +6,6 @@ import { Input } from "@/core/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,7 +13,9 @@ import {
 } from "@/core/components/ui/form";
 import { z } from "zod";
 import { Button } from "@/core/components/ui/button";
-import { signIn } from "next-auth/react";
+import { SignInResponse, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/core/components/ui/use-toast";
 
 const schema = z.object({
   email: z.string().min(1, { message: "Please enter a username" }),
@@ -24,13 +25,35 @@ const schema = z.object({
 export type LoginFormSchemaType = z.infer<typeof schema>;
 
 const LoginForm = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   const methods = useForm<LoginFormSchemaType>({
     resolver: zodResolver(schema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "64070108@kmitl.ac.th", password: "earth" },
   });
 
-  const onSubmit: SubmitHandler<LoginFormSchemaType> = (data) => {
-    signIn("credentials", { ...data, callbackUrl: "/" });
+  const onSubmit: SubmitHandler<LoginFormSchemaType> = async (data) => {
+    try {
+      const result: SignInResponse | undefined = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      if (!result) throw new Error("No response from server");
+      if (result.error) throw new Error(result.error);
+
+      router.replace("/stores");
+      toast({ title: `Welcome 👋`, description: "Have a good trip!" });
+    } catch (error) {
+      let message = "Unknown error";
+      if (error instanceof Error) message = error.message;
+
+      toast({
+        title: `Login fail`,
+        description: message,
+        variant: "destructive",
+      });
+    }
   };
 
   return (

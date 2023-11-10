@@ -1,7 +1,18 @@
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { RegisterFormSchemaType } from "@/app/register/_resources/components/RegisterForm";
+
+type RegisterResponseType = {
+  message: string;
+  status: string;
+  token: string;
+};
+
+type RegisterErrorResponseType = {
+  message: string;
+  status: string;
+};
 
 const useRegister = () => {
   const url = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
@@ -12,7 +23,11 @@ const useRegister = () => {
     );
   }
 
-  return useMutation<{ name: string }, Error, RegisterFormSchemaType>({
+  return useMutation<
+    RegisterResponseType,
+    AxiosError<RegisterErrorResponseType>,
+    RegisterFormSchemaType
+  >({
     mutationFn: async (body) => {
       const response = await axios.post(
         `${url}/api/register`,
