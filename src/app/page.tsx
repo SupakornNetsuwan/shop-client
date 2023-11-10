@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/core/components/ui/button";
-import Hero from "./(resources)/components/Hero";
+import Hero from "./_resources/components/Hero";
 
 const Home = () => {
   return (

@@ -10,7 +10,7 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <div className="fixed top-0 z-20 flex w-full justify-start gap-4 border-b border-slate-300/50 bg-white/80 px-4 py-4 backdrop-blur-sm xl:px-10">
+    <div className="fixed top-0 z-40 flex w-full justify-start gap-4 border-b border-slate-300/50 bg-white/80 px-4 py-4 backdrop-blur-sm xl:px-10">
       <Link href="/" className="inline-flex">
         <Image
           src={name}

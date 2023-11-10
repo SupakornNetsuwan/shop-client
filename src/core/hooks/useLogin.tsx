@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { LoginFormSchemaType } from "@/app/login/(resources)/components/LoginForm";
+import { LoginFormSchemaType } from "@/app/login/_resources/components/LoginForm";
 
 const useLogin = () => {
   return useMutation<

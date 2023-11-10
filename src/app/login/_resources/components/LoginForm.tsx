@@ -30,7 +30,7 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<LoginFormSchemaType> = (data) => {
-    signIn("credentials", { ...data });
+    signIn("credentials", { ...data, callbackUrl: "/" });
   };
 
   return (

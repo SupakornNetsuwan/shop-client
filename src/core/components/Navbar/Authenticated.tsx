@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "../ui/button";
-import { LogOut, User, ShoppingCart } from "lucide-react";
-import Link from "next/link";
+import { LogOut, User, BookUser, Store, ShoppingCart } from "lucide-react";
 import { Session } from "next-auth";
 import {
   NavigationMenu,
@@ -40,6 +39,34 @@ const Authenticated: React.FC<{ session: Session }> = ({ session }) => {
       </NavigationMenu>
       <NavigationMenu>
         <NavigationMenuList>
+          <NavigationMenuItem className="relative">
+            <NavigationMenuTrigger>
+              <BookUser size={18} />
+              <span className="ml-2">Account</span>
+            </NavigationMenuTrigger>
+            <NavigationMenuContent asChild>
+              <div className="flex flex-col p-1.5">
+                <NavigationMenuLink href="/profile" className="">
+                  <Button
+                    variant="ghost"
+                    className="flex w-full justify-start gap-2"
+                  >
+                    <User size={18} />
+                    <span>Profile</span>
+                  </Button>
+                </NavigationMenuLink>
+                <NavigationMenuLink href="/store">
+                  <Button
+                    variant="ghost"
+                    className="flex w-full justify-start gap-2"
+                  >
+                    <Store size={18} />
+                    <span>Store</span>
+                  </Button>
+                </NavigationMenuLink>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
           <NavigationMenuItem>
             <Popover>
               <PopoverTrigger asChild>
@@ -54,14 +81,7 @@ const Authenticated: React.FC<{ session: Session }> = ({ session }) => {
               </PopoverContent>
             </Popover>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/profile">
-              <Button variant="ghost" className="gap-2">
-                <User size={18} />
-                <span>Profile</span>
-              </Button>
-            </Link>
-          </NavigationMenuItem>
+
           <div className="w-0.5 self-stretch bg-slate-400/50" />
           <NavigationMenuItem>
             <Button
@@ -73,7 +93,6 @@ const Authenticated: React.FC<{ session: Session }> = ({ session }) => {
               <LogOut size={18} />
             </Button>
           </NavigationMenuItem>
-          <NavigationMenuIndicator />
         </NavigationMenuList>
       </NavigationMenu>
     </div>

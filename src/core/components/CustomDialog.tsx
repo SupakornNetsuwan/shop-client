@@ -15,9 +15,9 @@ import {
 type CustomDialogPropsType = {
   title: string;
   description: string;
-  trigger: React.FC<{ open: () => void }>;
+  trigger: (open: () => void) => React.ReactElement;
   body?: React.ReactElement;
-  footer?: React.FC<{ close: () => void }>;
+  footer?: (close: () => void) => React.ReactElement;
 };
 
 /**
@@ -44,26 +44,27 @@ type CustomDialogPropsType = {
 const CustomDialog: React.FC<CustomDialogPropsType> = ({
   title,
   description,
-  trigger: Trigger,
+  trigger,
   body,
-  footer: Footer,
+  footer,
 }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open}>
-      <DialogTrigger asChild>
-        <Trigger open={() => setOpen(true)} />
-      </DialogTrigger>
-      <DialogOverlay className="bg-slate-500/20 backdrop-blur-sm" onClick={(e) => setOpen(false)} />
-      <DialogContent className="bg-white">
+      <DialogTrigger asChild>{trigger(() => setOpen(true))}</DialogTrigger>
+      <DialogOverlay
+        className="bg-slate-500/20 backdrop-blur-sm"
+        onClick={(e) => setOpen(false)}
+      />
+      <DialogContent className="max-h-[70dvh] overflow-y-auto bg-white">
         <DialogClose onClick={() => setOpen(false)} />
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div>{body}</div>
-        <DialogFooter>{Footer && <Footer close={() => setOpen(false)} />}</DialogFooter>
+        <DialogFooter>{footer && footer(() => setOpen(false))}</DialogFooter>
       </DialogContent>
     </Dialog>
   );
