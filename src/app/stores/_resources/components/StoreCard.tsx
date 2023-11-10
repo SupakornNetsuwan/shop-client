@@ -9,6 +9,7 @@ import tree3 from "@/../../public/stores/tree-3.png";
 import tree4 from "@/../../public/stores/tree-4.png";
 import tree5 from "@/../../public/stores/tree-5.png";
 import tree6 from "@/../../public/stores/tree-6.png";
+import { ResponseGetShopType } from "@/core/hooks/stores/useGetStores";
 
 const _tempThumbnail = [tree1, tree2, tree3, tree4, tree5, tree6];
 
@@ -33,13 +34,16 @@ const Body: React.FC<{
     </div>
   );
 };
+interface StoreProps extends HTMLAttributes<HTMLDivElement> {
+  shop :ResponseGetShopType
+}
 
 const Store = React.forwardRef<
   React.ElementRef<"div">,
-  HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+  StoreProps
+>(({ className, shop, ...props }, ref) => {
   return (
-    <Link href={`/stores/store-id`} className="block store-card group select-none">
+    <Link href={`/stores/${shop._id}`} className="block store-card group select-none">
       <div
         ref={ref}
         className={cn(
@@ -74,7 +78,7 @@ const Store = React.forwardRef<
         />
         <Body>
           <h2 className="inline-block text-lg font-medium text-slate-800 group-hover:bg-slate-200 group-hover:px-2">
-            Chubby store
+            {shop.title}
           </h2>
           <p className="line-clamp-3 pt-2 text-sm text-slate-500">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui,
