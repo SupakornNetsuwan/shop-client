@@ -25,9 +25,7 @@ const page = () => {
           <Product.Name>
             <div>A product name</div>
           </Product.Name>
-
           <Product.Price>$20</Product.Price>
-
           <Product.Description>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio,
             quaerat. Lorem ipsum dolor sit amet consectetur adipisicing elit.
