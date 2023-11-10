@@ -1,13 +1,14 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import name from "../../../../public/name.svg";
-import auth from "../../libs/auth/auth";
 import Authenticated from "./Authenticated";
 import UnAuthenticated from "./UnAuthenticated";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-const Navbar = async () => {
-  const session = await auth();
+const Navbar = () => {
+  const session = useSession();
 
   return (
     <div className="fixed top-0 z-40 flex w-full justify-start gap-4 border-b border-slate-300/50 bg-white/80 px-4 py-4 backdrop-blur-sm xl:px-10">
@@ -20,7 +21,7 @@ const Navbar = async () => {
         />
       </Link>
       <div className="w-full">
-        {session ? <Authenticated session={session} /> : <UnAuthenticated />}
+        {session.data?.user ? <Authenticated /> : <UnAuthenticated />}
       </div>
     </div>
   );

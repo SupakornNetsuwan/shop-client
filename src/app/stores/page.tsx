@@ -11,13 +11,7 @@ const StoreCard = dynamic(() => import("./_resources/components/StoreCard"), {
   ssr: false,
 });
 
-const stores = [
-  { name: "Chubby sotre" },
-  { name: "Red autumn" },
-  { name: "Butterfly sight" },
-];
-
-const Stores: NextPage = () => {
+const Stores: NextPage = async () => {
   return (
     <div className="">
       <Header />

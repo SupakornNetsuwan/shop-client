@@ -23,8 +23,11 @@ import {
 } from "@/core/components/ui/popover";
 import Cart from "./Cart";
 import ProductMenu from "./ProductMenu";
+import { useSession } from "next-auth/react";
 
-const Authenticated: React.FC<{ session: Session }> = ({ session }) => {
+const Authenticated: React.FC = () => {
+  const { data } = useSession();
+  console.log(data)
   return (
     <div className="flex justify-between">
       <NavigationMenu>

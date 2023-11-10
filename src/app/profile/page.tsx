@@ -12,8 +12,12 @@ import {
 import ProfileDetail from "./_resources/components/ProfileDetail";
 import ProfileConfigureAction from "./_resources/components/ProfileConfigureAction";
 import CashConfigureAction from "./_resources/components/CashConfigureAction";
+import auth from "@/core/libs/auth/auth";
 
-const page: NextPage = () => {
+const page: NextPage = async () => {
+  const authen = await auth();
+  console.log(authen?.user);
+
   return (
     <>
       <div className="flex items-center justify-between">
