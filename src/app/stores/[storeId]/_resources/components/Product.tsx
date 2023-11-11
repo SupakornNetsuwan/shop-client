@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { atom, ExtractAtomValue } from "jotai";
+import { atom, ExtractAtomValue, useAtom } from "jotai";
 import { Input } from "@/core/components/ui/input";
 import { cn } from "@/core/libs/utils";
 import { Star, StarHalf } from "lucide-react";
 import type { ProductDetailsType } from "./Store";
 const optionAtom = atom({ name: "x", price: 12 });
+const productSelected = atom([])
 
 /* ----------------- Outer work part ----------------- */
 
@@ -69,6 +70,7 @@ const ProductContainer: React.FC<
  */
 
 const Product: React.FC<{product:ProductDetailsType}> = ({product}) => {
+  const [productInCart , setProductInCart] = useAtom(productSelected)
   return <div>
             <div className="bg-white  border rounded-lg p-4 cursor-pointer relative  hover:shadow-lg hover:scale-[1.1] ">
                       <div className="absolute left-4 top-4 flex gap-1">
