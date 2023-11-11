@@ -4,8 +4,10 @@ import { Input } from "@/core/components/ui/input";
 import { cn } from "@/core/libs/utils";
 import { Star, StarHalf } from "lucide-react";
 import type { ProductDetailsType } from "./Store";
+import useIncreaseItem from "@/core/hooks/navbar/Cart/useIncreaseItem";
+import useCreateCart from "@/core/hooks/navbar/Cart/useCreateCart";
 const optionAtom = atom({ name: "x", price: 12 });
-const productSelected = atom([])
+import { Button } from "@/core/components/ui/button";
 
 /* ----------------- Outer work part ----------------- */
 
@@ -69,8 +71,11 @@ const ProductContainer: React.FC<
  * @description เป็นส่วนของสินค้า
  */
 
+
 const Product: React.FC<{product:ProductDetailsType}> = ({product}) => {
-  const [productInCart , setProductInCart] = useAtom(productSelected)
+  const createCart = useCreateCart(product._id, product.name)
+
+
   return <div>
             <div className="bg-white  border rounded-lg p-4 cursor-pointer relative  hover:shadow-lg hover:scale-[1.1] ">
                       <div className="absolute left-4 top-4 flex gap-1">
@@ -97,9 +102,11 @@ const Product: React.FC<{product:ProductDetailsType}> = ({product}) => {
                         <div className="text-lg">
                           {product.price} Bath
                         </div>
-                          <div className="ring-2 ring-green-500 p-1 hover:ring-green-500 hover:ring-offset-4  rounded-lg text-sm ">
+                          <Button className="ring-2 ring-green-500 p-1 hover:ring-green-500 hover:ring-offset-4  rounded-lg text-sm " onClick={()=>createCart}>
+                           <div>
                             Add to Cart
-                          </div>
+                           </div>
+                          </Button>
                       </div>
               </div>
             

@@ -4,6 +4,7 @@ import Header from "./_resources/components/Header";
 import StoreCardWrapper from "./_resources/layout/StoreCardWrapper";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/core/components/ui/skeleton";
+import { ResponseGetShopsType } from "../api/shops/ShopsType.d";
 const StoreCard = dynamic(() => import("./_resources/components/StoreCard"), {
   loading: (loadingProps) => {
     return <Skeleton className="h-44 w-full" />;
@@ -22,6 +23,7 @@ async function getShops() {
   return res.json()
 }
 
+
 const Stores: NextPage = async() => {
 
   const data = getShops()
@@ -33,8 +35,8 @@ const Stores: NextPage = async() => {
     <div className="">
       <Header />
       <StoreCardWrapper className="store-wrapper pt-20">
-        {[...new Array(20)].map((_, i) => (
-          <StoreCard key={i} />
+        {shops.map((shop) => (
+          <StoreCard key={shop._id} shop={shop}/>
         ))}
       </StoreCardWrapper>
     </div>

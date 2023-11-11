@@ -25,14 +25,3 @@ interface Shop {
 }
 export type ResponseGetShopType = Shop
 export type ResponseGetShopsType = Shop[]
-const useGetShops = () =>{
-    const url = process.env.NEXT_PUBLIC_SHOP_SERVICE_URL
-    if(!url){
-        throw new Error("no url founds")
-    }
-    return useQuery<AxiosResponse<ResponseGetShopsType>, AxiosError<ResponseGetShopsType>>({
-        queryKey: ["getShops"],
-        queryFn: () => axios.get(`${url}/api/shops`),
-      });
-}
-export default useGetShops
