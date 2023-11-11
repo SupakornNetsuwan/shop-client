@@ -9,6 +9,7 @@ import useGetUserInfo from "@/core/hooks/useGetUserInfo";
 import LoadingAnimation from "@/core/components/LoadingAnimation";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/core/components/ui/use-toast";
+import { useSession } from "next-auth/react";
 
 const profileFormSchema = z.object({
   firstname: z.string().min(1, { message: "First Name is required" }),
@@ -36,6 +37,7 @@ const ProfileFormProvider: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   const editProfile = useEditProfile();
   const userInfo = useGetUserInfo();
+  const { update } = useSession();
   const userData = useMemo(() => userInfo.data?.data, [userInfo.data]);
   const methods = useForm<ProfileFormSchemType>({
     values: {
@@ -55,6 +57,7 @@ const ProfileFormProvider: React.FC<{ children: React.ReactNode }> = ({
     editProfile.mutate(data, {
       onSuccess(successData, variables, context) {
         router.refresh();
+        update({username:`${data.firstname} ${data.lastname}`})
         toast({
           title: "Success",
           description: "Profile has been updated",

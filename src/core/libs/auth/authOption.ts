@@ -103,13 +103,22 @@ const authOption = {
         async signIn({ user, profile }) {
             return true
         },
-        async jwt({ account, token, user }) {
+        async jwt({ account, token, user, trigger, session }) {
 
             if (account) {
                 token.id = user.id
                 token.email = user.email + ""
                 token.username = user.username
                 token.token = user.token
+            }
+
+            if (trigger === "update") {
+                console.log("--------", "Update token", "--------")
+                if (session.username) token.username = session.username
+            } else if (trigger === "signIn") {
+                console.log("--------", "Signin with token", "--------")
+            } else if (trigger === "signUp") {
+                console.log("--------", "Signup with token", "--------")
             }
 
             return token
