@@ -62,24 +62,6 @@ const ProfileForm = () => {
 
         <FormField
           control={control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="hidden sm:block">Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Email"
-                  className="sm:placeholder:opacity-0"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
           name="province"
           render={({ field }) => (
             <FormItem>
