@@ -27,7 +27,7 @@ import { useSession } from "next-auth/react";
 
 const Authenticated: React.FC = () => {
   const { data } = useSession();
-  console.log(data)
+  console.log(data);
   return (
     <div className="flex justify-between">
       <NavigationMenu>
@@ -88,7 +88,9 @@ const Authenticated: React.FC = () => {
           <div className="w-0.5 self-stretch bg-slate-400/50" />
           <NavigationMenuItem>
             <Button
-              onClick={(e) => signOut()}
+              onClick={(e) => {
+                signOut({ redirect: true, callbackUrl: "/login" });
+              }}
               variant="ghost"
               className="gap-2 border-2 border-transparent transition-colors hover:border-red-500 hover:bg-red-500/20"
             >
