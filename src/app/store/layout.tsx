@@ -5,14 +5,18 @@ import React from "react";
 import CreateProductAction from "./_resources/components/CreateProductAction";
 import { Separator } from "@/core/components/ui/separator";
 import auth from "@/core/libs/auth/auth";
+import { redirect } from "next/navigation";
 
 const layout: React.FC<{ children: React.ReactNode }> = async ({
   children,
   ...props
 }) => {
   const session = await auth();
-  console.log(session)
-  
+
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
     <div className="mt-12">
       <ContentWrapper>

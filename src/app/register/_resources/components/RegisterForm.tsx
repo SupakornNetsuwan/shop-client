@@ -73,7 +73,7 @@ const RegisterForm = () => {
           router.replace("/stores");
           toast({
             title: `Register success 👋`,
-            description: "Have a good trip!",
+            description: "We hope you are getting good!",
           });
         } catch (error) {
           let message = "Unknown error";

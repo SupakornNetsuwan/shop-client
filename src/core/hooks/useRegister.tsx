@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import type { RegisterFormSchemaType } from "@/app/register/_resources/components/RegisterForm";
 
 type RegisterResponseType = {
@@ -14,22 +14,22 @@ type RegisterErrorResponseType = {
   status: string;
 };
 
+const url = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+
+if (!url) {
+  throw new Error(
+    "NEXT_PUBLIC_USER_SERVICE_URL environment variable was not defined",
+  );
+}
+
 const useRegister = () => {
-  const url = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
-
-  if (!url) {
-    throw new Error(
-      "NEXT_PUBLIC_USER_SERVICE_URL environment variable was not defined",
-    );
-  }
-
   return useMutation<
-    RegisterResponseType,
+    AxiosResponse<RegisterResponseType>,
     AxiosError<RegisterErrorResponseType>,
     RegisterFormSchemaType
   >({
     mutationFn: async (body) => {
-      const response = await axios.post(
+      return axios.post(
         `${url}/api/register`,
         {
           email: body.email,
@@ -51,8 +51,6 @@ const useRegister = () => {
           headers: {},
         },
       );
-
-      return await response.data;
     },
     mutationKey: ["register"],
   });
