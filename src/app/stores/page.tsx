@@ -1,16 +1,16 @@
 import { NextPage } from "next";
-import React from "react";
+import React, {useMemo} from "react";
 import Header from "./_resources/components/Header";
 import StoreCardWrapper from "./_resources/layout/StoreCardWrapper";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/core/components/ui/skeleton";
-import useGetShops, { ResponseGetShopsType, ResponseGetShopType } from "@/core/hooks/stores/useGetStores";
 const StoreCard = dynamic(() => import("./_resources/components/StoreCard"), {
   loading: (loadingProps) => {
     return <Skeleton className="h-44 w-full" />;
   },
   ssr: false,
 });
+
 
 const stores = [
   { name: "Chubby sotre" },
@@ -32,9 +32,9 @@ const Stores: NextPage = async() => {
   return (
     <div className="">
       <Header />
-      <StoreCardWrapper className="store-wrapper pt-20" >
-        {shops.map((shop:ResponseGetShopType)=> (
-          <StoreCard key={shop._id} shop={shop} />
+      <StoreCardWrapper className="store-wrapper pt-20">
+        {[...new Array(20)].map((_, i) => (
+          <StoreCard key={i} />
         ))}
       </StoreCardWrapper>
     </div>
