@@ -71,7 +71,7 @@ const ProfileFormProvider: React.FC<{ children: React.ReactNode }> = ({
 
   if (userInfo.isLoading)
     return (
-      <div>
+      <div className="w-1/2 mx-auto">
         <LoadingAnimation />
       </div>
     );

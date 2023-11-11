@@ -11,7 +11,7 @@ const ContentWrapper = React.forwardRef<
     <div
       {...props}
       ref={ref}
-      className={cn("mx-auto max-w-[1800px] p-12 md:p-20", className)}
+      className={cn("mx-auto max-w-[1100px] p-12 md:p-20", className)}
     >
       {children}
     </div>

@@ -1,7 +1,13 @@
 "use client";
 import { Button } from "../ui/button";
-import { LogOut, User, BookUser, Store, ShoppingCart } from "lucide-react";
-import { Session } from "next-auth";
+import {
+  LogOut,
+  User,
+  BookUser,
+  Store,
+  ShoppingCart,
+  Truck,
+} from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -49,6 +55,15 @@ const Authenticated: React.FC = () => {
             </NavigationMenuTrigger>
             <NavigationMenuContent asChild>
               <div className="flex flex-col p-1.5">
+                <NavigationMenuLink href="/orders">
+                  <Button
+                    variant="ghost"
+                    className="flex w-full justify-start gap-2"
+                  >
+                    <Truck size={18} />
+                    <span>Orders</span>
+                  </Button>
+                </NavigationMenuLink>
                 <NavigationMenuLink href="/profile" className="">
                   <Button
                     variant="ghost"
