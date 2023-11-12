@@ -33,7 +33,7 @@ import { useSession } from "next-auth/react";
 
 const Authenticated: React.FC = () => {
   const { data } = useSession();
-  console.log(data);
+
   return (
     <div className="flex justify-between">
       <NavigationMenu>

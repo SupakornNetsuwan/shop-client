@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { atom, ExtractAtomValue, useAtom } from "jotai";
 import { Input } from "@/core/components/ui/input";
 import { cn } from "@/core/libs/utils";
 import { Star, StarHalf } from "lucide-react";
-import type { ProductDetailsType } from "./Store";
 import useIncreaseItem from "@/core/hooks/navbar/Cart/useIncreaseItem";
 import useCreateCart from "@/core/hooks/navbar/Cart/useCreateCart";
-const optionAtom = atom({ name: "x", price: 12 });
 import { Button } from "@/core/components/ui/button";
+import type { GetProductsResponseType } from "@/core/hooks/useGetProductsByShop";
+import { AspectRatio } from "@/core/components/ui/aspect-ratio";
 
 /* ----------------- Outer work part ----------------- */
 
@@ -15,11 +14,11 @@ import { Button } from "@/core/components/ui/button";
  * @description เป็นส่วนที่ห่อหุมทั้งหมด
  */
 
-const Container: React.FC<{ children: React.ReactElement[] }> = ({
+const Wrapper: React.FC<{ children: React.ReactElement[] }> = ({
   children,
 }) => {
   return (
-    <div className="mt-12 lg:mt-24 flex w-full flex-col gap-4 lg:flex-row">
+    <div className="relative mt-12 flex w-full flex-col gap-4 lg:mt-24">
       {children}
     </div>
   );
@@ -28,16 +27,19 @@ const Container: React.FC<{ children: React.ReactElement[] }> = ({
 /**
  * @description เป็นแถบเมนูสำหรับจัดการรายการสินค้า
  */
-const Menu: React.FC<{ onSearchChange: (searchTerm: string) => void }> = ({ onSearchChange }) => {
+
+const Menu: React.FC<{ onSearchChange: (searchTerm: string) => void }> = ({
+  onSearchChange,
+}) => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange(e.target.value);
   };
   return (
-    <div className="flex rounded-lg bg-slate-50 p-4">
+    <div className="z-10 flex justify-end rounded-lg bg-slate-50 p-4">
       <Input
         placeholder="Search"
         onChange={handleSearchChange}
-        className="text-slate-800"
+        className="w-64 text-slate-800"
       />
     </div>
   );
@@ -58,7 +60,7 @@ const ProductContainer: React.FC<
     <div
       {...props}
       className={cn(
-        "grid min-h-[75dvh] w-full grid-cols-2 md:grid-cols-3 gap-4 rounded-lg lg:grid-cols-5 content-start",
+        "grid min-h-[40em] w-full grid-cols-2 content-start gap-4",
         className,
       )}
     >
@@ -71,47 +73,41 @@ const ProductContainer: React.FC<
  * @description เป็นส่วนของสินค้า
  */
 
+const Product: React.FC<{ product: GetProductsResponseType }> = ({
+  product,
+}) => {
+  const createCart = useCreateCart(product._id, product.name);
 
-const Product: React.FC<{product:ProductDetailsType}> = ({product}) => {
-  const createCart = useCreateCart(product._id, product.name)
+  console.log(product);
 
-
-  return <div>
-            <div className="bg-white  border rounded-lg p-4 cursor-pointer relative  hover:shadow-lg hover:scale-[1.1] ">
-                      <div className="absolute left-4 top-4 flex gap-1">
-                        <div className="aspect-square w-2.5 rounded-full bg-[#ea6a5e] hover:bg-[#db6156]" />
-                        <div className="aspect-square w-2.5 rounded-full bg-[#f2be4e] hover:bg-[#d6b24d]" />
-                        <div className="aspect-square w-2.5 rounded-full bg-[#6bc659] hover:bg-[#60b44f]" />
-                      </div>
-                      <div className="bg-white rounded-lg pt-4 mb-2 text-xl">
-                        {product.name}
-                      </div>
-                      <div className="flex h-full flex-1 flex-col items-center justify-center rounded-lg border bg-slate-50 p-4 mb-1 text-9xl">
-                        🐬
-                      </div>
-                      <div className="text-sx mt-2  mb-1">
-                          รายละเอียดสินค้า
-                        </div>
-                      <div className=" rounded-lg ml-2 text-sm h-20 text-slate-500">
-                          {product.description}
-                      </div>
-                      <div className="text-xs pt-1 flex items-center">
-                       {product.rating} <Star className="ml-1" size={10}/>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="text-lg">
-                          {product.price} Bath
-                        </div>
-                          <Button className="ring-2 ring-green-500 p-1 hover:ring-green-500 hover:ring-offset-4  rounded-lg text-sm " onClick={()=>createCart}>
-                           <div>
-                            Add to Cart
-                           </div>
-                          </Button>
-                      </div>
-              </div>
-            
+  return (
+    <div>
+      <div className="relative rounded-lg border bg-white p-4 hover:shadow-md">
+        <div className="absolute left-4 top-4 flex gap-1">
+          <div className="aspect-square w-2.5 rounded-full bg-[#ea6a5e] hover:bg-[#db6156]" />
+          <div className="aspect-square w-2.5 rounded-full bg-[#f2be4e] hover:bg-[#d6b24d]" />
+          <div className="aspect-square w-2.5 rounded-full bg-[#6bc659] hover:bg-[#60b44f]" />
         </div>
+
+        <AspectRatio
+          className="mt-6 flex items-center justify-center rounded-lg border bg-slate-50 p-4 text-4xl"
+          ratio={16 / 9}
+        >
+          <p>💖</p>
+        </AspectRatio>
+        <div className="flex items-start justify-between pt-4">
+          <div>
+            <div className="text-xl font-medium text-slate-800">
+              {product.name}
+            </div>
+            <div className="text-sm text-slate-500">{product.description}</div>
+          </div>
+          <h2 className="text-xl text-blue-500">{product.price}</h2>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-const productElements = { Menu, Container, Product, ProductContainer };
+const productElements = { Menu, Wrapper, Product, ProductContainer };
 export default productElements;
