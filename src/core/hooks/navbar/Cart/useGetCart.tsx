@@ -28,6 +28,7 @@ const useGetCart = () => {
     queryKey: ["getCart"],
     retry: false,
     staleTime: 1000 * 6,
+    enabled: !!session.data?.user.token,
   });
 };
 

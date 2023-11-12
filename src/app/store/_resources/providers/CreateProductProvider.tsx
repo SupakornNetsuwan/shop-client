@@ -6,6 +6,7 @@ import { Form } from "@/core/components/ui/form";
 import useAddProduct from "@/core/hooks/products/useAddProduct";
 import { useRouter } from "next/navigation";
 import LoadingAnimation from "@/core/components/LoadingAnimation";
+import { useToast } from "@/core/components/ui/use-toast";
 
 export const createProductFormSchema = z.object({
   name: z.string().min(1),
@@ -27,6 +28,7 @@ export type CreateProductSchemaType = z.infer<typeof createProductFormSchema>;
 const CreateProductProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { toast } = useToast();
   const router = useRouter();
   const addProduct = useAddProduct();
   const methods = useForm<CreateProductSchemaType>({
@@ -54,6 +56,10 @@ const CreateProductProvider: React.FC<{ children: React.ReactNode }> = ({
       },
       onSuccess(data, variables, context) {
         router.refresh();
+        toast({
+          title: "Success",
+          description: "Product was created and ready to sell",
+        });
         console.log(data.data);
       },
     });

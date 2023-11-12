@@ -10,18 +10,21 @@ import useGetCartTotalPrice from "@/core/hooks/navbar/Cart/useGetCartTotalPrice"
 import { useRouter } from "next/navigation";
 import { CircleDollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 import usePurchase from "@/core/hooks/navbar/Cart/usePurchase";
+import { useToast } from "../../ui/use-toast";
+import useClearCart from "@/core/hooks/navbar/Cart/useClearCart";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Cart = () => {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
   const [isOpenConfirm, setIsOpenConfirm] = useState(false);
-  const router = useRouter();
+  const clearCart = useClearCart();
   const { data, isLoading, isError, error } = useGetCart();
   const cartTotalPrice = useGetCartTotalPrice();
   const purchase = usePurchase();
 
   const cartItems = useMemo(() => data?.data.product || [], [data?.data]);
   const price = useMemo(() => cartTotalPrice?.data?.data, [cartTotalPrice]);
-
-  console.log(cartItems)
 
   if (isLoading) {
     return <h3 className="text-center text-slate-500">Loading...</h3>;
@@ -60,7 +63,9 @@ const Cart = () => {
         </div>
         <div className="flex space-x-2">
           <Button
-            onClick={() => setIsOpenConfirm(false)}
+            onClick={() => {
+              setIsOpenConfirm(false);
+            }}
             className="flex-1"
             variant="secondary"
           >
@@ -73,16 +78,36 @@ const Cart = () => {
             </div>
           ) : (
             <Button
-              onClick={() =>
+              onClick={() => {
                 purchase.mutate("_", {
                   onSuccess(data, variables, context) {
-                    console.log(data.data);
+                    toast({
+                      title: "Success",
+                      description: "Thankyou for your purchase!",
+                    });
+
+                    clearCart.mutate("_", {
+                      onSuccess(data, variables, context) {
+                        console.log("Cart was cleared");
+                        queryClient.invalidateQueries({
+                          queryKey: ["getCart"],
+                        });
+                        queryClient.invalidateQueries({
+                          queryKey: ["getWallet"],
+                        });
+                      },
+                    });
                   },
                   onError(error, variables, context) {
                     console.log(error.response?.data);
+                    toast({
+                      title: "Error",
+                      description: error.response?.data.cause,
+                      variant: "destructive",
+                    });
                   },
-                })
-              }
+                });
+              }}
               className="flex-1"
               variant="default"
             >

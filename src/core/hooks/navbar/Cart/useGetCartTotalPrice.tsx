@@ -22,6 +22,7 @@ const useGetCartTotalPrice = () => {
     queryKey: ["getCartTotal"],
     retry: false,
     staleTime: 1000 * 10,
+    enabled: !!session.data?.user.token,
   });
 };
 

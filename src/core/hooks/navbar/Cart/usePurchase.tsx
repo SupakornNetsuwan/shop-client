@@ -14,7 +14,11 @@ if (!url) {
 const usePurchase = () => {
   const session = useSession();
 
-  return useMutation<AxiosResponse<string>, AxiosError, any>({
+  return useMutation<
+    AxiosResponse<string>,
+    AxiosError<{ message: string; cause: string }>,
+    string
+  >({
     mutationFn: (payload) =>
       axios.get(`${url}/api/carts/order`, {
         headers: {

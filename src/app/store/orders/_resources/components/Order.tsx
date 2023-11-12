@@ -11,6 +11,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import useUpdateOrder from "@/core/hooks/useUpdateOrder";
 import { useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/core/components/ui/use-toast";
 
 const statuses: Readonly<["ORDERED", "CANCEL", "SHIPPED", "DELIVERED"]> = [
   "ORDERED",
@@ -32,6 +33,7 @@ const Order: React.FC<{
   orderId: string;
   orderStatus: string;
 }> = ({ price, productName, orderId, productId, orderStatus }) => {
+  const { toast } = useToast();
   const queryClient = useQueryClient();
   const updateOrder = useUpdateOrder(orderId, productId);
   const { control } = useForm<OrderSchemaType>({
@@ -39,7 +41,6 @@ const Order: React.FC<{
       orderStatus: orderStatus as OrderSchemaType["orderStatus"],
     },
   });
-
 
   return (
     <div className="flex items-center space-x-2 py-2">
@@ -65,6 +66,10 @@ const Order: React.FC<{
                     queryClient.invalidateQueries({
                       queryKey: ["getOrderOfShop"],
                     });
+                    toast({
+                      title: "Updated",
+                      description: "Order status updated",
+                    });
                   },
                 });
                 onChange(value);
@@ -76,14 +81,12 @@ const Order: React.FC<{
                 <SelectValue placeholder="Loading" />
               </SelectTrigger>
               <SelectContent>
-                {["ORDERED", "CANCEL", "SHIPPED", "DELIVERED"].map(
-                  (status) => (
-                    <SelectItem key={status} value={status}>
-                      {status.charAt(0).toUpperCase() +
-                        status.slice(1).toLowerCase()}
-                    </SelectItem>
-                  ),
-                )}
+                {["ORDERED", "CANCEL", "SHIPPED", "DELIVERED"].map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status.charAt(0).toUpperCase() +
+                      status.slice(1).toLowerCase()}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           )}

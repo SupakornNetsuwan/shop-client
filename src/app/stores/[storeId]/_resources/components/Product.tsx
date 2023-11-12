@@ -99,6 +99,7 @@ const ProductContainer: React.FC<
 const Product: React.FC<{ product: GetProductsResponseType }> = ({
   product,
 }) => {
+  const [comment, setComment] = useState("");
   const queryClient = useQueryClient();
   const createCart = useCreateCart();
   const getCart = useGetCart();
@@ -228,38 +229,44 @@ const Product: React.FC<{ product: GetProductsResponseType }> = ({
             />
           </AspectRatio>
           <div className="new-scrollbar mt-4 flex max-h-[20em] flex-col space-y-2 overflow-y-auto">
-            {[...product.reviews, ...product.reviews, ...product.reviews].map(
-              (review, index) => (
-                <div key={index} className="rounded-lg bg-slate-100/50 p-2">
-                  <div className="flex items-center space-x-2">
-                    <h3 className="font-medium text-slate-800">
-                      {review.owner_name}
-                    </h3>
-                    <div className="aspect-square w-1 rounded-full bg-slate-500" />
-                    <div className="flex space-x-1">
-                      <p className="text-xs text-slate-500">({review.rate})</p>
-                      <div className="flex items-center">
-                        {[...new Array(Math.floor(review.rate)).keys()].map(
-                          (starNth) => (
-                            <Star
-                              key={starNth}
-                              size={12}
-                              className="text-amber-600"
-                            />
-                          ),
-                        )}
-                        {review.rate % 1 !== 0 && (
-                          <StarHalf size={12} className="text-amber-600" />
-                        )}
-                      </div>
+            {product.reviews.map((review, index) => (
+              <div key={index} className="rounded-lg bg-slate-100/50 p-2">
+                <div className="flex items-center space-x-2">
+                  <h3 className="font-medium text-slate-800">
+                    {review.owner_name}
+                  </h3>
+                  <div className="aspect-square w-1 rounded-full bg-slate-500" />
+                  <div className="flex space-x-1">
+                    <p className="text-xs text-slate-500">({review.rate})</p>
+                    <div className="flex items-center">
+                      {[...new Array(Math.floor(review.rate)).keys()].map(
+                        (starNth) => (
+                          <Star
+                            key={starNth}
+                            size={12}
+                            className="text-amber-600"
+                          />
+                        ),
+                      )}
+                      {review.rate % 1 !== 0 && (
+                        <StarHalf size={12} className="text-amber-600" />
+                      )}
                     </div>
                   </div>
-                  <p className="line-clamp-2 text-sm text-slate-600">
-                    {review.content}
-                  </p>
                 </div>
-              ),
-            )}
+                <p className="line-clamp-2 text-sm text-slate-600">
+                  {review.content}
+                </p>
+              </div>
+            ))}
+            <div className="sticky bottom-0 flex w-full space-x-2 rounded-lg bg-slate-50 p-4">
+              <Input
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="outline-none focus:outline-none focus:ring-0"
+              />
+              <Button variant="outline">Send</Button>
+            </div>
           </div>
         </div>
       }

@@ -14,7 +14,7 @@ const OrderTable = () => {
 
   if (orders.isLoading || shop.isLoading) {
     return (
-      <div className="">
+      <div>
         <div className="mx-auto  w-full max-w-[10em]">
           <LoadingAnimation />
         </div>
@@ -25,9 +25,12 @@ const OrderTable = () => {
   if (orderList.length === 0) {
     return (
       <div className="flex min-h-[20em] flex-col items-center justify-center">
-        <h1 className="text-xl font-medium text-slate-800">No Products</h1>
-        <p className="text-base text-slate-500">
-          You need to create a new product here
+        <h1 className="text-center text-xl font-medium text-slate-800">
+          No orders
+        </h1>
+        <p className="text-center text-base text-slate-500">
+          You have no orders yet,
+          <br /> please wait for the customer to order
         </p>
         <div className="relative mx-4 mt-4 h-60 w-full max-w-[30em]">
           <Image

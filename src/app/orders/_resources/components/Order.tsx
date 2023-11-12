@@ -27,7 +27,7 @@ const Item: React.FC<{ product: ProductInOrder }> = ({ product }) => {
   return (
     <div className="flex justify-between from-slate-100 to-white p-4 pr-0 hover:bg-gradient-to-r">
       <div className="w-18 relative mr-4 aspect-square overflow-hidden rounded-lg lg:w-24">
-        <Image src={tree} alt="Product image" fill />
+        <Image src={product.img_path} priority alt="Product image" fill sizes="10vw, 10vw"/>
       </div>
       <div className="flex flex-1 justify-between">
         <div>
