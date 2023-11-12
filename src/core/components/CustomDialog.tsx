@@ -57,7 +57,7 @@ const CustomDialog: React.FC<CustomDialogPropsType> = ({
         className="bg-slate-500/20 backdrop-blur-sm"
         onClick={(e) => setOpen(false)}
       />
-      <DialogContent className="max-h-[70dvh] overflow-y-auto bg-white">
+      <DialogContent className="max-h-[70dvh] overflow-y-auto bg-white new-scrollbar">
         <DialogClose onClick={() => setOpen(false)} />
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

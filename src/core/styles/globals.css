@@ -76,5 +76,22 @@
 }
 
 @layer utilities {
-  
+  .new-scrollbar::-webkit-scrollbar {
+    width: 0.5em;
+  }
+
+  /* Track */
+  .new-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  .new-scrollbar::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+  }
+
+  /* Handle on hover */
+  .new-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #8a8a8a;
+  }
 }

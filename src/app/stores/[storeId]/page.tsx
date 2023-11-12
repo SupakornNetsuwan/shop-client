@@ -20,13 +20,15 @@ const page: NextPage<PageProps> = async ({ params: { storeId } }) => {
   return (
     <div>
       <Thumbnail src={tree1} alt="tree1" fill={true} />
-      <ContentWrapper className="relative z-20 -translate-y-24 md:pt-12">
-        <h1 className="relative inline text-5xl font-semibold text-slate-800 before:absolute before:bottom-2 before:block before:h-3 before:w-full before:bg-slate-300/50 md:text-7xl">
-          {shopData.title}
-        </h1>
-        <h2 className="mt-8 text-lg text-slate-500 [text-wrap:balance;] md:text-xl">
-          Valid Account : {shopData.account}
-        </h2>
+      <ContentWrapper className="relative -top-24 ">
+        <div className="mx-auto w-full max-w-[1000px] ">
+          <h1 className="relative inline text-5xl font-semibold text-slate-800 before:absolute before:bottom-2 before:block before:h-3 before:w-full before:bg-slate-300/50 md:text-7xl">
+            {shopData.title}
+          </h1>
+          <h2 className="mt-8 text-lg text-slate-500 [text-wrap:balance;] md:text-xl">
+            Valid Account : {shopData.account}
+          </h2>
+        </div>
         <Store shopData={shopData} />
       </ContentWrapper>
     </div>

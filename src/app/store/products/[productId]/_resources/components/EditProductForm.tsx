@@ -99,9 +99,7 @@ const EditProductForm = () => {
                 <Input
                   placeholder="Price"
                   className="sm:placeholder:opacity-0"
-                  onChange={(e) =>
-                    onChange(String(parseInt(e.target.value) || 0))
-                  }
+                  onChange={(e) => onChange(parseInt(e.target.value) || 0)}
                   {...props}
                 />
               </FormControl>
@@ -111,7 +109,7 @@ const EditProductForm = () => {
         />
         <FormField
           control={control}
-          name="img"
+          name="image"
           render={({ field: { value, onChange, ...props } }) => (
             <FormItem>
               <FormLabel className="hidden sm:block">Image</FormLabel>

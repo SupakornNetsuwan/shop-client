@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { useSession } from "next-auth/react";
 
-export type GetProductsResponseType = {
+export interface GetProductsResponseType {
   _id: string;
   name: string;
   description: string;
@@ -13,7 +13,13 @@ export type GetProductsResponseType = {
   rating: number;
   create_at: string;
   edit_at: string;
-};
+  reviews:  {
+    anonymous: boolean;
+    content: string;
+    owner_name: string;
+    rate: number;
+  }[];
+}
 
 const url = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL;
 

@@ -4,8 +4,16 @@ import tree2 from "public/stores/tree-2.png";
 import CustomGoBack from "@/core/components/CustomGoBack";
 import EditProductAction from "./_resources/components/EditProductAction";
 import DeleteProductAction from "./_resources/components/DeleteProductAction";
+import { NextPage } from "next";
+import getProduct from "@/core/libs/functions/getProduct";
+import { CircleDollarSign } from "lucide-react";
 
-const page = () => {
+type PageParams = { params: { productId: string } };
+
+const page: NextPage<PageParams> = async (params) => {
+  const product = await getProduct(params.params.productId);
+  const productData = product.data;
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -20,58 +28,32 @@ const page = () => {
         </div>
       </div>
       <Product.Container>
-        <Product.Image src={tree2} alt="product image" className="" />
+        <Product.Image draggable={false} src={productData.img_path} alt="product image" className="" />
         <div className="mt-4 flex-1 md:mt-0">
           <Product.Name>
-            <div>A product name</div>
+            <div>{productData.name}</div>
           </Product.Name>
-          <Product.Price>$20</Product.Price>
-          <Product.Description>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio,
-            quaerat. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Rep udiandae qui nesciunt laudantium maiores excepturi
-            necessitatibus autem eos! Labore, vel minus?
-          </Product.Description>
+          <Product.Price>
+            <span className="flex items-center space-x-2 rounded-lg bg-slate-50 px-4 py-2">
+              <CircleDollarSign size={32} />
+              {productData.price}
+            </span>
+          </Product.Price>
+          <Product.Description>{productData.description}</Product.Description>
           <Product.Seprator />
 
           <div className="flex-col space-y-2">
-            <Product.Rating>4.5</Product.Rating>
-            <Product.Review
-              writer="Earth"
-              comment="qui nesciunt laudantium maiores excepturi
-            necessitatibus autem eos! Labore, vel minus?"
-              rating={4.5}
-            />
-            <Product.Review
-              writer="Earth"
-              comment="qui nesciunt laudantium maiores excepturi
-            necessitatibus autem eos! Labore, vel minus?"
-              rating={3.5}
-            />
-            <Product.Review
-              writer="Earth"
-              comment="qui nesciunt laudantium maiores excepturi
-            necessitatibus autem eos!?"
-              rating={5}
-            />
-            <Product.Review
-              writer="Earth"
-              comment="qui nesciunt laudantium maiores excepturi
-            necessitatibus autem eos! Labore, vel minus?"
-              rating={4.5}
-            />
-            <Product.Review
-              writer="Earth"
-              comment="qui nesciunt laudantium maiores excepturi
-            necessitatibus autem eos! Labore, vel minus?"
-              rating={3.5}
-            />
-            <Product.Review
-              writer="Earth"
-              comment="qui nesciunt laudantium maiores excepturi
-            necessitatibus autem eos!?"
-              rating={5}
-            />
+            <Product.Rating>{productData.rating}</Product.Rating>
+            {productData.reviews.map((review, index) => {
+              return (
+                <Product.Review
+                  key={index}
+                  writer={review.owner_name}
+                  comment={review.content}
+                  rating={review.rate}
+                />
+              );
+            })}
           </div>
         </div>
       </Product.Container>

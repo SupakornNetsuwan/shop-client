@@ -18,10 +18,10 @@ if (!url) {
     );
 }
 
-const getShop = async (storeId: string) => {
+const getShop = async (shopId: string) => {
     const session = await auth()
 
-    return await axios.get<GetShopResponseType>(`${url}/api/shops/${storeId}`, {
+    return await axios.get<GetShopResponseType>(`${url}/api/shops/${shopId}`, {
         headers: {
             "Authorization": `Bearer ${session?.user.token}`
         }

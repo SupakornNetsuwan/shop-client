@@ -35,7 +35,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
               </Link>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <CashConfigureAction />
             <ProfileConfigureAction />
           </div>

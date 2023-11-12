@@ -16,23 +16,36 @@ const CashTopupForm = () => {
   const form = useFormContext<CashFormSchemType>();
 
   return (
-    <div className="">
+    <div className="flex flex-col space-y-4">
       <FormField
         control={form.control}
         name="amount"
         render={({ field: { onChange, ...props } }) => (
           <FormItem>
-            <FormLabel>จำนวนเงิน</FormLabel>
+            <FormLabel>Amount</FormLabel>
             <FormControl>
               <Input
-                placeholder="shadcn"
+                placeholder="amount"
                 onChange={(e) =>
                   onChange(String(parseInt(e.target.value) || 0))
                 }
                 {...props}
               />
             </FormControl>
-            <FormDescription>จำนวนเงินที่คุณต้องการเติม</FormDescription>
+            <FormDescription>The amount you need to top-up</FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="description"
+        render={({ field: { ...props } }) => (
+          <FormItem>
+            <FormLabel>Description</FormLabel>
+            <FormControl>
+              <Input placeholder="Description" {...props} />
+            </FormControl>
             <FormMessage />
           </FormItem>
         )}

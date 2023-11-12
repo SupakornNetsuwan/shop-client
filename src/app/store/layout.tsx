@@ -11,10 +11,10 @@ import getShopByUserId from "@/core/libs/functions/getShopByUserId";
 import handsLaptop from "public/hands-laptop.gif";
 import Image from "next/image";
 import { AspectRatio } from "@/core/components/ui/aspect-ratio";
-import { FormSubmitHandler } from "react-hook-form";
-import { Input } from "@/core/components/ui/input";
 import CreateStoreForm from "./_resources/components/CreateStoreForm";
 import CreateStoreProvider from "./_resources/providers/CreateStoreProvider";
+import getWallet from "@/core/libs/functions/getWallet";
+import { AxiosError } from "axios";
 
 const layout: React.FC<{ children: React.ReactNode }> = async ({
   children,
@@ -24,6 +24,16 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({
 
   if (!session) {
     redirect("/login");
+  }
+
+  try {
+    const wallet = await getWallet();
+
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.log(error.response?.data.message);
+      redirect("/profile");
+    }
   }
 
   const shopByUserId = await getShopByUserId();
@@ -78,8 +88,8 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({
               className="box-content  bg-slate-100 p-1 marker:rounded-lg"
               size={28}
             />
-            <h2 className="  text-2xl font-medium text-slate-800">
-              Manage Store
+            <h2 className="text-2xl font-medium text-slate-800">
+              {shopByUserIdData[0].title}
             </h2>
             <Separator orientation="vertical" className="h-8" />
             <div className="flex self-stretch">

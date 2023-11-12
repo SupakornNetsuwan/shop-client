@@ -1,7 +1,8 @@
-import React, { HTMLAttributes } from "react";
+import React from "react";
 import { cn } from "@/core/libs/utils";
 import Image from "next/image";
 import profilePlaceholder from "@/../../public/profile-placeholder.webp";
+import { Store as StoreIcon } from "lucide-react";
 import Link from "next/link";
 import tree1 from "@/../../public/stores/tree-1.png";
 import tree2 from "@/../../public/stores/tree-2.png";
@@ -9,7 +10,7 @@ import tree3 from "@/../../public/stores/tree-3.png";
 import tree4 from "@/../../public/stores/tree-4.png";
 import tree5 from "@/../../public/stores/tree-5.png";
 import tree6 from "@/../../public/stores/tree-6.png";
-import { ResponseGetShopType } from "@/core/hooks/stores/useGetStores";
+import { GetShopResponseType } from "@/core/libs/functions/getShop";
 
 const _tempThumbnail = [tree1, tree2, tree3, tree4, tree5, tree6];
 
@@ -34,16 +35,16 @@ const Body: React.FC<{
     </div>
   );
 };
-interface StoreProps extends HTMLAttributes<HTMLDivElement> {
-  shop :ResponseGetShopType
-}
 
 const Store = React.forwardRef<
   React.ElementRef<"div">,
-  StoreProps
+  React.ComponentPropsWithoutRef<"div"> & { shop: GetShopResponseType }
 >(({ className, shop, ...props }, ref) => {
   return (
-    <Link href={`/stores/${shop._id}`} className="block store-card group select-none">
+    <Link
+      href={`/stores/${shop._id}`}
+      className="store-card group block select-none"
+    >
       <div
         ref={ref}
         className={cn(
@@ -69,21 +70,20 @@ const Store = React.forwardRef<
             />
           }
           profilePicture={
-            <Image
-              src={profilePlaceholder}
-              alt="profile-placeholder"
-              className=" absolute bottom-4 right-4 ml-auto aspect-square w-14 translate-y-1/2 rounded-md transition-all group-hover:right-[calc(100%-4.5em)] group-hover:shadow-lg lg:bottom-0"
-            />
+            <div className="absolute bottom-4 right-4 ml-auto flex aspect-square w-14 translate-y-1/2 items-center justify-center rounded-md border bg-gray-200/80 transition-all group-hover:right-[calc(100%-4.5em)] group-hover:shadow-lg lg:bottom-0">
+              <StoreIcon size={24} className="text-slate-800" />
+            </div>
           }
         />
         <Body>
           <h2 className="inline-block text-lg font-medium text-slate-800 group-hover:bg-slate-200 group-hover:px-2">
             {shop.title}
           </h2>
-          <p className="line-clamp-3 pt-2 text-sm text-slate-500">
+
+          {/* <p className="line-clamp-3 pt-2 text-sm text-slate-500">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui,
             itaque.
-          </p>
+          </p> */}
         </Body>
       </div>
     </Link>
