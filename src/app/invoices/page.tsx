@@ -1,12 +1,18 @@
 "use client";
 import React, { useMemo } from "react";
-import useGetCart from "@/core/hooks/navbar/Cart/useGetCart";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/core/components/ui/accordion";
 import useGetUserInfo from "@/core/hooks/useGetUserInfo";
 import useGetCartTotalPrice from "@/core/hooks/navbar/Cart/useGetCartTotalPrice";
 import useInvoice from "@/core/hooks/useInvoice";
 import { Button } from "@/core/components/ui/button";
 import useGetOrderByUserId from "@/core/hooks/useGetOrderByUserId";
 import { GetOrderByUserIdResponseType } from "@/core/libs/functions/getOrderByUserId";
+import Image from "next/image";
 
 const Checkout = () => {
   const order = useGetOrderByUserId();
@@ -69,17 +75,52 @@ const Checkout = () => {
           View your invoice and download it as PDF file.
         </p>
         <div className="mt-4">
-          {ordersData?.map((order) => (
-            <div
-              key={order._id}
-              className="flex items-center justify-between rounded-lg bg-slate-50 p-4"
-            >
-              <p className="text-slate-500">Invoice : {order._id}</p>
-              <Button onClick={() => downloadInvoiceHandler(order)}>
-                Download Invoice
-              </Button>
-            </div>
-          ))}
+          {ordersData?.map((order) => {
+            console.log(order);
+            return (
+              <div key={order._id} className="flex flex-col bg-slate-50 p-4">
+                <div className="flex items-center justify-between rounded-lg ">
+                  <p className="text-slate-500">Invoice : {order._id}</p>
+                  <Button onClick={() => downloadInvoiceHandler(order)}>
+                    Download Invoice
+                  </Button>
+                </div>
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>Detail</AccordionTrigger>
+                    <AccordionContent>
+                      <div>
+                        {order.products.map((product) => {
+                          return (
+                            <div
+                              key={product._id}
+                              className="flex items-center bg-white p-4"
+                            >
+                              <div className="relative aspect-square w-36 overflow-hidden rounded-lg">
+                                <Image
+                                  src={product.img_path}
+                                  alt="product image"
+                                  fill
+                                />
+                              </div>
+                              <div className="ml-4 flex flex-col">
+                                <h3 className="text-lg font-medium">
+                                  {product.name}
+                                </h3>
+                                <p>Category : {product.category}</p>
+                                <p>Price : {product.price}</p>
+                                <p>Shop ID : {product.shop_id}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

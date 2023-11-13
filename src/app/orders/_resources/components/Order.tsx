@@ -49,7 +49,7 @@ const Item: React.FC<{ product: ProductInOrder }> = ({ product }) => {
 
           <div className="flex flex-col">
             <p className="w-24 truncate text-left text-sm text-slate-500">
-              Price
+              Price / piece
             </p>
             <p className="w-24 truncate text-left text-sm text-slate-800">
               {product.price}

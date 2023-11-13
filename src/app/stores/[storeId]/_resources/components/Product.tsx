@@ -14,6 +14,15 @@ import useGetCart from "@/core/hooks/navbar/Cart/useGetCart";
 import { useQueryClient } from "@tanstack/react-query";
 import useIncreaseCartItem from "@/core/hooks/navbar/Cart/useIncreaseCartItem";
 import { useToast } from "@/core/components/ui/use-toast";
+import useAddReview from "@/core/hooks/useAddReview";
+import { useSession } from "next-auth/react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/core/components/ui/select";
 
 /* ----------------- Outer work part ----------------- */
 
@@ -99,8 +108,11 @@ const ProductContainer: React.FC<
 const Product: React.FC<{ product: GetProductsResponseType }> = ({
   product,
 }) => {
+  const session = useSession();
   const [comment, setComment] = useState("");
+  const [score, setScore] = useState("2.5");
   const queryClient = useQueryClient();
+  const addReview = useAddReview(product._id);
   const createCart = useCreateCart();
   const getCart = useGetCart();
   const { toast } = useToast();
@@ -259,14 +271,56 @@ const Product: React.FC<{ product: GetProductsResponseType }> = ({
                 </p>
               </div>
             ))}
-            <div className="sticky bottom-0 flex w-full space-x-2 rounded-lg bg-slate-50 p-4">
+            {/* <div className="sticky bottom-0 flex w-full space-x-2 rounded-lg bg-slate-50 p-4">
+              <Select
+                defaultValue={score.toString()}
+                onValueChange={(newScore) => setScore(newScore)}
+              >
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5].map(
+                    (toShowScore) => (
+                      <SelectItem
+                        key={toShowScore}
+                        value={toShowScore.toString()}
+                      >
+                        {toShowScore}
+                      </SelectItem>
+                    ),
+                  )}
+                </SelectContent>
+              </Select>
               <Input
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 className="outline-none focus:outline-none focus:ring-0"
               />
-              <Button variant="outline">Send</Button>
-            </div>
+              <Button
+                variant="outline"
+                onClick={(e) => {
+                  addReview.mutate(
+                    {
+                      content: comment,
+                      rate: 5,
+                      owner_name: session.data?.user.username || "-",
+                      isAnonymous: false,
+                    },
+                    {
+                      onError(error, variables, context) {
+                        console.log(error.response?.data);
+                      },
+                      onSuccess(data, variables, context) {
+                        console.log(data.data);
+                      },
+                    },
+                  );
+                }}
+              >
+                Send
+              </Button>
+            </div> */}
           </div>
         </div>
       }
