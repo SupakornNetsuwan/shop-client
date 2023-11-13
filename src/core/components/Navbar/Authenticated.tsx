@@ -7,6 +7,7 @@ import {
   Store,
   ShoppingCart,
   Truck,
+  Scroll,
 } from "lucide-react";
 import {
   NavigationMenu,
@@ -33,7 +34,7 @@ import { useSession } from "next-auth/react";
 
 const Authenticated: React.FC = () => {
   const { data } = useSession();
-  console.log(data);
+
   return (
     <div className="flex justify-between">
       <NavigationMenu>
@@ -55,6 +56,15 @@ const Authenticated: React.FC = () => {
             </NavigationMenuTrigger>
             <NavigationMenuContent asChild>
               <div className="flex flex-col p-1.5">
+                <NavigationMenuLink href="/profile" className="">
+                  <Button
+                    variant="ghost"
+                    className="flex w-full justify-start gap-2"
+                  >
+                    <User size={18} />
+                    <span>Profile</span>
+                  </Button>
+                </NavigationMenuLink>
                 <NavigationMenuLink href="/orders">
                   <Button
                     variant="ghost"
@@ -64,13 +74,13 @@ const Authenticated: React.FC = () => {
                     <span>Orders</span>
                   </Button>
                 </NavigationMenuLink>
-                <NavigationMenuLink href="/profile" className="">
+                <NavigationMenuLink href="/invoices">
                   <Button
                     variant="ghost"
                     className="flex w-full justify-start gap-2"
                   >
-                    <User size={18} />
-                    <span>Profile</span>
+                    <Scroll  size={18} />
+                    <span>Invoices</span>
                   </Button>
                 </NavigationMenuLink>
                 <NavigationMenuLink href="/store">

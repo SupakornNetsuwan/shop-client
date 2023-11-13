@@ -12,7 +12,7 @@ import RegisterForm from "./_resources/components/RegisterForm";
 
 const page = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center  bg-gradient-radial from-blue-200/60 via-white to-brand-primary/10 p-12">
+    <div className="pt-24 flex min-h-screen items-center justify-center  bg-gradient-radial from-blue-200/60 via-white to-brand-primary/10 p-12">
       <Card className="w-full lg:w-[30em]">
         <CardHeader>
           <CardTitle className="font-medium">Welcome</CardTitle>

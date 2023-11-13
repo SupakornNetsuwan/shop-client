@@ -48,9 +48,10 @@ const CreateStoreForm = () => {
             )}
             <FormControl>
               <Input
+                disabled
                 placeholder="Account Number"
-                className="sm:placeholder:opacity-0"
-                {...field}
+                className="disabled:bg-slate-200 sm:placeholder:opacity-0"
+                value={field.value}
               />
             </FormControl>
             <FormMessage />

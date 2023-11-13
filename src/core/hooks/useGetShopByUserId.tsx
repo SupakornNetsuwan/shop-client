@@ -23,6 +23,7 @@ const useGetShopByUserId = () => {
         },
       });
     },
+    enabled: !!session.data?.user.token,
   });
 };
 

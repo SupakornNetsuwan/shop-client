@@ -70,7 +70,7 @@ const Price: React.FC<React.ComponentPropsWithoutRef<"div">> = ({
   children,
 }) => {
   return (
-    <div>
+    <div className="inline-block">
       <p className="my-2 text-xl font-semibold text-blue-500 lg:text-4xl">
         {children}
       </p>

@@ -25,7 +25,7 @@ const useGetUserInfo = () => {
         },
       });
     },
-    
+    enabled: !!session.data?.user.token,
   });
 };
 

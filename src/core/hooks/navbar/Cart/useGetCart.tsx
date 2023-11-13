@@ -1,32 +1,35 @@
-import { useQuery } from "@tanstack/react-query"
-import { AxiosResponse, AxiosError } from "axios"
-import axios from "axios"
+import { useQuery } from "@tanstack/react-query";
+import { AxiosResponse, AxiosError } from "axios";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import type { CartErrorResponseType, GetCartResponseType } from "./type";
 
-export interface ResponseGetCart {
-    _id: string;
-    product?: (ProductEntity)[] | null;
-    customer_id: string;
-  }
-  export interface ProductEntity {
-    _id: string;
-    name: string;
-    amount: number;
-  }
-  
+const url = process.env.NEXT_PUBLIC_CART_SERVICE_URL;
 
-const useGetCart = () =>{
-    const token =""
-    const url = process.env.NEXT_PUBLIC_CART_SERVICE_URL
-    if(!url){
-        throw new Error("no url founds")
-    }
-    return useQuery<AxiosResponse<ResponseGetCart>, AxiosError<ResponseGetCart>>({
-        queryKey: ["getCart"],
-        queryFn: () => axios.get(`${url}/api/carts/me`,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        }),
-      });
+if (!url) {
+  throw new Error(
+    "NEXT_PUBLIC_CART_SERVICE_URL environment variable was not defined",
+  );
 }
-export default useGetCart
+
+const useGetCart = () => {
+  const session = useSession();
+
+  return useQuery<
+    AxiosResponse<GetCartResponseType>,
+    AxiosError<CartErrorResponseType>
+  >({
+    queryFn: () =>
+      axios.get(`${url}/api/carts/me`, {
+        headers: {
+          Authorization: `Bearer ${session.data?.user.token}`,
+        },
+      }),
+    queryKey: ["getCart"],
+    retry: false,
+    staleTime: 1000 * 6,
+    enabled: !!session.data?.user.token,
+  });
+};
+
+export default useGetCart;

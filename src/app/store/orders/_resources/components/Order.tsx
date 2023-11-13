@@ -9,12 +9,15 @@ import {
 } from "@/core/components/ui/select";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
+import useUpdateOrder from "@/core/hooks/useUpdateOrder";
+import { useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/core/components/ui/use-toast";
 
-const statuses: Readonly<["ORDERED", "CANCEL", "SHIPPED", "DELIVERIED"]> = [
+const statuses: Readonly<["ORDERED", "CANCEL", "SHIPPED", "DELIVERED"]> = [
   "ORDERED",
   "CANCEL",
   "SHIPPED",
-  "DELIVERIED",
+  "DELIVERED",
 ];
 
 const orderSchema = z.object({
@@ -25,38 +28,28 @@ type OrderSchemaType = z.infer<typeof orderSchema>;
 
 const Order: React.FC<{
   productName: string;
-  amount: number;
+  productId: string;
   price: number;
-}> = ({ amount, price, productName }) => {
-  const { control, watch } = useForm<OrderSchemaType>({
-    defaultValues: {
-      orderStatus: "ORDERED",
+  orderId: string;
+  orderStatus: string;
+}> = ({ price, productName, orderId, productId, orderStatus }) => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const updateOrder = useUpdateOrder(orderId, productId);
+  const { control } = useForm<OrderSchemaType>({
+    values: {
+      orderStatus: orderStatus as OrderSchemaType["orderStatus"],
     },
   });
 
   return (
     <div className="flex items-center space-x-2 py-2">
-      <p className="w-full max-w-[10em] truncate text-sm font-medium">
-        Customer Name
-      </p>
-      <p className="text-blue-500">has ordered</p>
+      <p className="text-blue-500">Has ordered</p>
       <ArrowRight className="text-blue-500" size={24} />
       <p className="w-full max-w-[12em] truncate text-sm font-medium">
         {productName || "-"}
       </p>
 
-      <div className="flex w-full max-w-[10em] items-center text-sm">
-        <span className="mr-2 text-slate-500">Amount</span>
-        <p className="flex aspect-square  items-center justify-center rounded bg-slate-100 px-3 py-2 font-medium text-slate-800">
-          {amount || 0}
-        </p>
-      </div>
-      <div className="flex items-center text-sm">
-        <span className="mr-2 text-slate-500">Price</span>
-        <p className="flex items-center justify-center rounded bg-slate-100 px-3 py-2 font-medium text-slate-800">
-          {price || 0}
-        </p>
-      </div>
       <div>
         <Controller
           name="orderStatus"
@@ -64,7 +57,23 @@ const Order: React.FC<{
           render={({ field: { onChange, name, value } }) => (
             <Select
               defaultValue={"ORDERED"}
-              onValueChange={onChange}
+              onValueChange={(value) => {
+                updateOrder.mutate(value, {
+                  onError(error, variables, context) {
+                    console.log(error.response?.data);
+                  },
+                  onSuccess(data, variables, context) {
+                    queryClient.invalidateQueries({
+                      queryKey: ["getOrderOfShop"],
+                    });
+                    toast({
+                      title: "Updated",
+                      description: "Order status updated",
+                    });
+                  },
+                });
+                onChange(value);
+              }}
               name={name}
               value={value}
             >
@@ -72,14 +81,12 @@ const Order: React.FC<{
                 <SelectValue placeholder="Loading" />
               </SelectTrigger>
               <SelectContent>
-                {["ORDERED", "CANCEL", "SHIPPED", "DELIVERIED"].map(
-                  (status) => (
-                    <SelectItem key={status} value={status}>
-                      {status.charAt(0).toUpperCase() +
-                        status.slice(1).toLowerCase()}
-                    </SelectItem>
-                  ),
-                )}
+                {["ORDERED", "CANCEL", "SHIPPED", "DELIVERED"].map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status.charAt(0).toUpperCase() +
+                      status.slice(1).toLowerCase()}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           )}

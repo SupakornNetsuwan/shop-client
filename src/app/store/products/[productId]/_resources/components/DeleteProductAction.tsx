@@ -3,8 +3,16 @@ import CustomAlertDialog from "@/core/components/CustomAlertDialog";
 import { Button } from "@/core/components/ui/button";
 import React from "react";
 import { Trash2 } from "lucide-react";
+import useDeleteProduct from "@/core/hooks/products/useDeleteProduct";
+import { useParams, useRouter } from "next/navigation";
+import { useToast } from "@/core/components/ui/use-toast";
 
 const DeleteProductAction = () => {
+  const { toast } = useToast();
+  const delteProduct = useDeleteProduct();
+  const router = useRouter();
+  const { productId }: { productId: string } = useParams();
+
   return (
     <CustomAlertDialog
       title="Deletion confirm"
@@ -24,7 +32,16 @@ const DeleteProductAction = () => {
         <Button
           variant="destructive"
           onClick={() => {
-            console.log("Do something");
+            delteProduct.mutate(productId, {
+              onSuccess() {
+                toast({
+                  title: "Deleted",
+                  description: "Product deleted successfully",
+                });
+                router.push("/store/products");
+              },
+            });
+            
             close();
           }}
         >

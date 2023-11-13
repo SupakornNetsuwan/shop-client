@@ -29,13 +29,13 @@ const ProductMenu = () => {
           className="object-cover opacity-50 transition-all group-hover:blur-[5px] "
         />
       </li>
-      <ListItem href="/docs" title="Art">
+      <ListItem href="/stores" title="Art">
         Commercial art for your business or private usage
       </ListItem>
-      <ListItem href="/docs" title="Poster">
+      <ListItem href="/stores" title="Poster">
         Choose your favorite poster collections
       </ListItem>
-      <ListItem href="/docs" title="Goods & Accessories">
+      <ListItem href="/stores" title="Goods & Accessories">
         Find some cool stuffs for brighten your day
       </ListItem>
     </ul>

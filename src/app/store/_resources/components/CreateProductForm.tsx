@@ -111,7 +111,7 @@ const CreateProductForm = () => {
         />
         <FormField
           control={control}
-          name="img"
+          name="image"
           render={({ field: { value, onChange, ...props } }) => (
             <FormItem>
               <FormLabel className="hidden sm:block">Image</FormLabel>
